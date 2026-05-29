@@ -12,7 +12,11 @@
 html, body {
   width: 100%;
   height: 100%;
+  height: 100dvh;
   overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
 body {
@@ -26,6 +30,7 @@ body {
   font-family: 'Dancing Script', cursive;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* === Page === */
@@ -35,7 +40,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 16px;
+  padding: 10px;
+  padding: max(10px, env(safe-area-inset-top)) max(10px, env(safe-area-inset-right)) max(10px, env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left));
 }
 
 /* === Card Container === */
@@ -44,8 +50,9 @@ body {
   width: 100%;
   max-width: 620px;
   height: 88vh;
+  height: 88dvh;
   max-height: 780px;
-  min-height: 520px;
+  min-height: 340px;
   perspective: 1500px;
 }
 
@@ -57,7 +64,7 @@ body {
   inset: 0;
   background: linear-gradient(135deg, #FF6B9D 0%, #E040A0 40%, #C850C0 65%, #FF8E53 100%);
   border-radius: 24px;
-  transform-origin: top center;
+  transform-origin: center center;
   transition: transform 1.4s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 20;
   display: flex;
@@ -68,12 +75,15 @@ body {
   -webkit-tap-highlight-color: transparent;
   animation: coverPulse 3s ease-in-out infinite;
   overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .card.opened .card-cover {
   transform: rotateX(-180deg);
   pointer-events: none;
   animation: none;
+  opacity: 0;
 }
 
 /* Inner decorative border */
@@ -196,6 +206,8 @@ body {
     inset 0 0 80px rgba(80, 40, 140, 0.15),
     inset 0 0 200px rgba(40, 20, 80, 0.1),
     0 20px 60px rgba(0, 0, 0, 0.5);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 /* ============================================
@@ -484,6 +496,7 @@ body {
   transition: opacity 0.8s ease, transform 0.8s ease;
   transition-delay: 2s;
   margin-top: 4px;
+  margin-bottom: env(safe-area-inset-bottom, 0px);
   flex-shrink: 0;
   text-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
 }
@@ -620,13 +633,22 @@ body {
 }
 
 /* ============================================
-   RESPONSIVE
+   RESPONSIVE - MOBILE FIRST FIXES
    ============================================ */
+
+/* === Phones: up to 520px wide === */
 @media (max-width: 520px) {
+  .page {
+    padding: 6px;
+    padding: max(6px, env(safe-area-inset-top)) max(6px, env(safe-area-inset-right)) max(6px, env(safe-area-inset-bottom)) max(6px, env(safe-area-inset-left));
+  }
+
   .card {
-    height: 92vh;
+    height: 94vh;
+    height: 94dvh;
     max-height: none;
-    min-height: 440px;
+    min-height: 300px;
+    border-radius: 18px;
   }
 
   .card-cover,
@@ -635,72 +657,47 @@ body {
   }
 
   .cover-border {
-    inset: 10px;
+    inset: 8px;
     border-radius: 12px;
   }
 
-  .character {
-    width: 140px;
-    height: 140px;
-    background-size: 560px 140px;
+  .cover-content {
+    padding: 14px;
   }
 
-  .character-wrap {
-    margin-left: -70px;
-    width: 140px;
-    height: 140px;
-    bottom: 4px;
+  .heart-icon {
+    width: 38px;
+    height: 35px;
+    margin-bottom: 12px;
   }
 
-  .birthday-text {
-    margin-top: 4px;
-    margin-bottom: 4px;
+  .heart-icon::before,
+  .heart-icon::after {
+    width: 19px;
+    height: 30px;
+    border-radius: 19px 19px 0 0;
   }
 
-  .name-word {
-    margin-top: 4px;
+  .heart-icon::before {
+    left: 19px;
+  }
+
+  .cover-from {
+    font-size: clamp(0.95rem, 3.5vw, 1.4rem);
+    margin-bottom: 16px;
+  }
+
+  .cover-title {
+    font-size: clamp(1.3rem, 5vw, 2rem);
+    letter-spacing: 2px;
+  }
+
+  .cover-arrow {
+    margin: 16px auto 0;
   }
 
   .card-inside {
-    padding: 16px 10px 12px;
-  }
-
-  .note-head {
-    width: 16px;
-    height: 12px;
-  }
-
-  .note-stem {
-    height: 24px;
-    top: -24px;
-  }
-
-  .note-flag {
-    top: -24px;
-    height: 14px;
-    width: 9px;
-  }
-
-  .note-double .note-stem {
-    height: 22px;
-    top: -22px;
-  }
-
-  .note-double .note-head-2 {
-    left: 18px;
-    width: 16px;
-    height: 12px;
-  }
-
-  .note-double .note-beam {
-    width: 18px;
-    top: -22px;
-  }
-}
-
-@media (max-height: 600px) {
-  .card {
-    height: 96vh;
+    padding: 14px 8px 10px;
   }
 
   .birthday-text {
@@ -708,23 +705,200 @@ body {
     margin-bottom: 2px;
   }
 
+  .name-word {
+    margin-top: 2px;
+  }
+
+  .word {
+    gap: 1px;
+  }
+
   .letter {
-    font-size: clamp(1.6rem, 7vw, 3rem);
+    font-size: clamp(1.8rem, 9vw, 3.2rem);
+  }
+
+  /* Smaller character on phones */
+  .character {
+    width: 130px;
+    height: 130px;
+    background-size: 520px 130px;
+  }
+
+  .character-wrap {
+    margin-left: -65px;
+    width: 130px;
+    height: 130px;
+    bottom: 2px;
+  }
+
+  .character-wrap::after {
+    width: 90px;
+    height: 12px;
+  }
+
+  /* Smaller bob on phones */
+  .character-bob {
+    animation-name: charBobMobile;
+  }
+
+  .scene {
+    min-height: 150px;
+  }
+
+  /* Smaller notes on phones */
+  .note-head {
+    width: 16px;
+    height: 12px;
+  }
+
+  .note-stem {
+    height: 22px;
+    top: -22px;
+    width: 2.5px;
+  }
+
+  .note-flag {
+    top: -22px;
+    height: 12px;
+    width: 8px;
+    right: 2.5px;
+  }
+
+  .note-double {
+    width: 32px;
+  }
+
+  .note-double .note-stem {
+    height: 20px;
+    top: -20px;
+  }
+
+  .note-double .note-head-2 {
+    left: 16px;
+    width: 16px;
+    height: 12px;
+  }
+
+  .note-double .note-beam {
+    width: 16px;
+    height: 3px;
+    top: -20px;
+    right: -2.5px;
+  }
+
+  .footer-message {
+    font-size: clamp(0.9rem, 3vw, 1.2rem);
+    margin-bottom: max(2px, env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* === Very small phones: up to 360px === */
+@media (max-width: 360px) {
+  .card {
+    height: 96vh;
+    height: 96dvh;
+    min-height: 260px;
+  }
+
+  .card-cover,
+  .card-inside {
+    border-radius: 14px;
+  }
+
+  .card-inside {
+    padding: 10px 6px 8px;
+  }
+
+  .letter {
+    font-size: clamp(1.5rem, 10vw, 2.4rem);
+  }
+
+  .character {
+    width: 110px;
+    height: 110px;
+    background-size: 440px 110px;
+  }
+
+  .character-wrap {
+    margin-left: -55px;
+    width: 110px;
+    height: 110px;
   }
 
   .scene {
     min-height: 120px;
   }
 
-  .footer-message {
-    transition-delay: 1.5s;
+  .heart-icon {
+    width: 30px;
+    height: 28px;
+    margin-bottom: 8px;
+  }
+
+  .heart-icon::before,
+  .heart-icon::after {
+    width: 15px;
+    height: 24px;
+    border-radius: 15px 15px 0 0;
+  }
+
+  .heart-icon::before {
+    left: 15px;
+  }
+
+  .cover-from {
+    margin-bottom: 10px;
+  }
+
+  .cover-title {
+    font-size: clamp(1.1rem, 4.5vw, 1.6rem);
+    letter-spacing: 1px;
   }
 }
 
-/* Landscape phones */
-@media (max-height: 450px) and (orientation: landscape) {
+/* === Short screens (landscape or short phones) === */
+@media (max-height: 600px) {
+  .card {
+    height: 96vh;
+    height: 96dvh;
+  }
+
+  .birthday-text {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .name-word {
+    margin-top: 0;
+  }
+
+  .letter {
+    font-size: clamp(1.4rem, 7vw, 2.6rem);
+  }
+
+  .scene {
+    min-height: 100px;
+  }
+
+  .footer-message {
+    transition-delay: 1.5s;
+  }
+
+  .character-bob {
+    animation-name: charBobMobile;
+  }
+}
+
+/* === Very short screens (landscape phones) === */
+@media (max-height: 450px) {
   .card {
     height: 98vh;
+    height: 98dvh;
+    min-height: 200px;
+  }
+
+  .page {
+    padding: 4px;
   }
 
   .birthday-text {
@@ -732,22 +906,59 @@ body {
   }
 
   .letter {
-    font-size: clamp(1.2rem, 5vw, 2rem);
+    font-size: clamp(1rem, 5vw, 1.8rem);
   }
 
   .scene {
-    min-height: 80px;
+    min-height: 70px;
   }
 
   .character {
-    width: 100px;
-    height: 100px;
-    background-size: 400px 100px;
+    width: 90px;
+    height: 90px;
+    background-size: 360px 90px;
   }
 
   .character-wrap {
-    margin-left: -50px;
-    width: 100px;
-    height: 100px;
+    margin-left: -45px;
+    width: 90px;
+    height: 90px;
   }
+
+  .character-bob {
+    animation-name: charBobTiny;
+  }
+
+  .card-inside {
+    padding: 8px 6px 6px;
+  }
+
+  .footer-message {
+    margin-top: 2px;
+    margin-bottom: 0;
+  }
+
+  .cover-from {
+    margin-bottom: 8px;
+  }
+
+  .cover-title {
+    margin-bottom: 0;
+  }
+
+  .cover-arrow {
+    margin: 8px auto 0;
+  }
+}
+
+/* Mobile character bob (smaller amplitude) */
+@keyframes charBobMobile {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Tiny character bob (for landscape/very small screens) */
+@keyframes charBobTiny {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
 }
