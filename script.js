@@ -1,4 +1,4 @@
-/* ============================================
+*/ ============================================
    FELICIDADES PIPA - Birthday Card Script
    ============================================ */
 
@@ -207,13 +207,21 @@
     var sceneW = sceneRect.width;
     var sceneH = sceneRect.height;
 
+    // Get actual character size from rendered element
+    var charEl = document.getElementById('character');
+    var charW = charEl ? charEl.offsetWidth : 180;
+    var charH = charEl ? charEl.offsetHeight : 180;
+
     // Character center position
     var charCX = sceneW / 2 + characterOffsetX;
-    var charCY = sceneH - 100;
+    var charCY = sceneH - charH / 2;
 
     var needsDodge = false;
     var dodgeDir = 0;
     var closestDist = 9999;
+
+    var dodgeRadiusX = charW / 2 + 25;
+    var dodgeRadiusY = charH / 2 + 30;
 
     for (var i = 0; i < activeNotes.length; i++) {
       var note = activeNotes[i];
@@ -222,9 +230,9 @@
       var noteCY = noteRect.top - sceneRect.top + noteRect.height / 2;
 
       // Is the note approaching the character vertically?
-      if (noteCY > charCY - 110 && noteCY < charCY + 40) {
+      if (noteCY > charCY - dodgeRadiusY && noteCY < charCY + dodgeRadiusY * 0.4) {
         var dx = Math.abs(noteCX - charCX);
-        if (dx < 95 && dx < closestDist) {
+        if (dx < dodgeRadiusX && dx < closestDist) {
           closestDist = dx;
           dodgeDir = noteCX > charCX ? -1 : 1;
           needsDodge = true;
@@ -234,15 +242,15 @@
 
     if (needsDodge) {
       // Dodge away from the closest danger
-      var dodgeStrength = 8 + (1 - closestDist / 95) * 10;
+      var dodgeStrength = 6 + (1 - closestDist / dodgeRadiusX) * 12;
       targetOffsetX += dodgeDir * dodgeStrength;
     } else {
       // Return to center smoothly
       targetOffsetX *= 0.94;
     }
 
-    // Clamp to scene bounds
-    var maxOffset = Math.max(10, (sceneW / 2) - 100);
+    // Clamp to scene bounds (account for actual character width)
+    var maxOffset = Math.max(10, (sceneW / 2) - (charW / 2 + 10));
     if (targetOffsetX > maxOffset) targetOffsetX = maxOffset;
     if (targetOffsetX < -maxOffset) targetOffsetX = -maxOffset;
 
