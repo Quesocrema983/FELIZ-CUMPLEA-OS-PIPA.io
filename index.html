@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feliz Cumpleaños Pipa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page">
+    <div class="card" id="card">
+      <!-- Cover -->
+      <div class="card-cover" id="cardCover">
+        <div class="cover-border"></div>
+        <div class="cover-content">
+          <div class="heart-icon"></div>
+          <p class="cover-from">Para ti, con mucho carino de tu unica nienta</p>
+          <h1 class="cover-title">ABRE TU SORPRESA</h1>
+          <div class="cover-arrow"></div>
+        </div>
+      </div>
+
+      <!-- Inside -->
+      <div class="card-inside" id="cardInside">
+        <div class="stars" id="stars"></div>
+        <div class="confetti-layer" id="confettiLayer"></div>
+
+        <div class="birthday-text">
+          <div class="word">
+            <span class="letter" style="--hue:0;--i:0">F</span>
+            <span class="letter" style="--hue:25;--i:1">E</span>
+            <span class="letter" style="--hue:50;--i:2">L</span>
+            <span class="letter" style="--hue:80;--i:3">I</span>
+            <span class="letter" style="--hue:105;--i:4">C</span>
+            <span class="letter" style="--hue:130;--i:5">I</span>
+            <span class="letter" style="--hue:155;--i:6">T</span>
+            <span class="letter" style="--hue:180;--i:7">A</span>
+            <span class="letter" style="--hue:205;--i:8">D</span>
+            <span class="letter" style="--hue:230;--i:9">E</span>
+            <span class="letter" style="--hue:255;--i:10">S</span>
+          </div>
+          <div class="word name-word">
+            <span class="letter" style="--hue:285;--i:11">P</span>
+            <span class="letter" style="--hue:310;--i:12">I</span>
+            <span class="letter" style="--hue:330;--i:13">P</span>
+            <span class="letter" style="--hue:355;--i:14">A</span>
+          </div>
+        </div>
+
+        <div class="scene" id="scene">
+          <div class="notes-container" id="notesContainer"></div>
+          <div class="character-wrap" id="characterWrap">
+            <div class="character-bob">
+              <div class="character" id="character"></div>
+            </div>
+          </div>
+        </div>
+
+        <p class="footer-message">Con mucho amor, de tu querida y UNICA nieta</p>
+      </div>
+    </div>
+  </div>
+
+  <audio id="bgMusic" loop preload="auto">
+    <source src="cancion.mp3" type="audio/mpeg">
+  </audio>
+
+  <script src="script.js"></script>
+</body>
+</html>

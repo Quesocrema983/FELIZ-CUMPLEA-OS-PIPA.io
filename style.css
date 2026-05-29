@@ -1,0 +1,753 @@
+/* ============================================
+   FELICIDADES PIPA - Birthday Card Styles
+   ============================================ */
+
+/* === Reset & Base === */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #080818;
+  background-image:
+    radial-gradient(ellipse at 25% 15%, rgba(100, 50, 150, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 75% 85%, rgba(50, 80, 150, 0.08) 0%, transparent 50%);
+  font-family: 'Dancing Script', cursive;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* === Page === */
+.page {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+/* === Card Container === */
+.card {
+  position: relative;
+  width: 100%;
+  max-width: 620px;
+  height: 88vh;
+  max-height: 780px;
+  min-height: 520px;
+  perspective: 1500px;
+}
+
+/* ============================================
+   CARD COVER (Front)
+   ============================================ */
+.card-cover {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #FF6B9D 0%, #E040A0 40%, #C850C0 65%, #FF8E53 100%);
+  border-radius: 24px;
+  transform-origin: top center;
+  transition: transform 1.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  animation: coverPulse 3s ease-in-out infinite;
+  overflow: hidden;
+}
+
+.card.opened .card-cover {
+  transform: rotateX(-180deg);
+  pointer-events: none;
+  animation: none;
+}
+
+/* Inner decorative border */
+.cover-border {
+  position: absolute;
+  inset: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-radius: 16px;
+  pointer-events: none;
+}
+
+/* Decorative corner accents */
+.cover-border::before,
+.cover-border::after {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-color: rgba(255, 255, 255, 0.5);
+  border-style: solid;
+}
+
+.cover-border::before {
+  top: 10px;
+  left: 10px;
+  border-width: 2px 0 0 2px;
+  border-radius: 4px 0 0 0;
+}
+
+.cover-border::after {
+  bottom: 10px;
+  right: 10px;
+  border-width: 0 2px 2px 0;
+  border-radius: 0 0 4px 0;
+}
+
+/* Cover content */
+.cover-content {
+  text-align: center;
+  color: white;
+  padding: 20px;
+  position: relative;
+  z-index: 2;
+}
+
+/* CSS Heart */
+.heart-icon {
+  width: 48px;
+  height: 44px;
+  margin: 0 auto 18px;
+  position: relative;
+  animation: heartBeat 1.4s ease-in-out infinite;
+}
+
+.heart-icon::before,
+.heart-icon::after {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 38px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 24px 24px 0 0;
+}
+
+.heart-icon::before {
+  left: 24px;
+  transform: rotate(-45deg);
+  transform-origin: 0 100%;
+}
+
+.heart-icon::after {
+  left: 0;
+  transform: rotate(45deg);
+  transform-origin: 100% 100%;
+}
+
+.cover-from {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(1.1rem, 3.8vw, 1.7rem);
+  font-weight: 700;
+  margin-bottom: 22px;
+  opacity: 0.9;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  letter-spacing: 1px;
+}
+
+.cover-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(1.6rem, 5.5vw, 2.6rem);
+  font-weight: 900;
+  text-shadow: 0 3px 20px rgba(0, 0, 0, 0.25);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.cover-arrow {
+  width: 24px;
+  height: 24px;
+  margin: 22px auto 0;
+  border-left: 3px solid rgba(255, 255, 255, 0.7);
+  border-bottom: 3px solid rgba(255, 255, 255, 0.7);
+  transform: rotate(-45deg);
+  animation: arrowBounce 1.6s ease-in-out infinite;
+}
+
+/* ============================================
+   CARD INSIDE (Content)
+   ============================================ */
+.card-inside {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #0b0b28 0%, #15103e 30%, #231560 60%, #1a1050 85%, #120d3a 100%);
+  border-radius: 24px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 22px 16px 16px;
+  box-shadow:
+    inset 0 0 80px rgba(80, 40, 140, 0.15),
+    inset 0 0 200px rgba(40, 20, 80, 0.1),
+    0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* ============================================
+   STARS / SPARKLES
+   ============================================ */
+.stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.star {
+  position: absolute;
+  width: var(--size);
+  height: var(--size);
+  background: white;
+  border-radius: 50%;
+  animation: twinkle var(--dur) ease-in-out infinite;
+  animation-delay: var(--delay);
+}
+
+/* Larger stars with cross shape */
+.star.large {
+  border-radius: 0;
+  background: transparent;
+}
+
+.star.large::before,
+.star.large::after {
+  content: '';
+  position: absolute;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 2px;
+}
+
+.star.large::before {
+  width: 2px;
+  height: var(--size);
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+}
+
+.star.large::after {
+  width: var(--size);
+  height: 2px;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+/* ============================================
+   CONFETTI
+   ============================================ */
+.confetti-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 30;
+  overflow: hidden;
+}
+
+.confetti-piece {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--w);
+  height: var(--h);
+  background: var(--bg);
+  border-radius: var(--radius, 2px);
+  opacity: 0;
+  animation: confettiBurst var(--dur) ease-out forwards;
+  animation-delay: var(--delay);
+}
+
+/* ============================================
+   BIRTHDAY TEXT
+   ============================================ */
+.birthday-text {
+  position: relative;
+  z-index: 5;
+  text-align: center;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  flex-shrink: 0;
+}
+
+.word {
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+  flex-wrap: wrap;
+  line-height: 1;
+}
+
+.name-word {
+  margin-top: 6px;
+}
+
+.letter {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 900;
+  font-size: clamp(2.2rem, 8.5vw, 4.2rem);
+  color: hsl(var(--hue), 100%, 65%);
+  text-shadow:
+    0 0 15px hsla(var(--hue), 100%, 65%, 0.5),
+    0 0 35px hsla(var(--hue), 100%, 65%, 0.25),
+    0 2px 4px rgba(0, 0, 0, 0.3);
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(35px) scale(0.3) rotate(-15deg);
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition-delay: calc(var(--i) * 0.06s + 0.5s);
+  will-change: transform, opacity;
+}
+
+.card.opened .letter {
+  opacity: 1;
+  transform: translateY(0) scale(1) rotate(0deg);
+}
+
+/* Wave animation applied via JS after letters appear */
+.letter.wave {
+  animation: letterWave 2.5s ease-in-out infinite;
+  animation-delay: calc(var(--i) * 0.11s);
+}
+
+/* ============================================
+   SCENE (Character + Notes area)
+   ============================================ */
+.scene {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  z-index: 5;
+  min-height: 180px;
+  overflow: hidden;
+}
+
+/* ============================================
+   MUSICAL NOTES
+   ============================================ */
+.notes-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.note {
+  position: absolute;
+  top: -60px;
+  pointer-events: none;
+  z-index: 4;
+  opacity: 0;
+  animation: noteFall var(--fall-dur) linear forwards;
+  animation-delay: var(--delay, 0s);
+}
+
+.note-inner {
+  position: relative;
+  width: 22px;
+}
+
+/* Note head (filled oval) */
+.note-head {
+  width: 20px;
+  height: 15px;
+  background: var(--note-color, #FFD700);
+  border-radius: 50%;
+  transform: rotate(-20deg);
+  box-shadow: 0 0 10px hsla(var(--note-hue, 50), 100%, 60%, 0.4);
+}
+
+/* Stem */
+.note-stem {
+  position: absolute;
+  right: 0;
+  top: -30px;
+  width: 3px;
+  height: 30px;
+  background: var(--note-color, #FFD700);
+  border-radius: 1.5px;
+}
+
+/* Flag (for eighth notes) */
+.note-flag {
+  position: absolute;
+  right: 3px;
+  top: -30px;
+  width: 11px;
+  height: 18px;
+  border-right: 3px solid var(--note-color, #FFD700);
+  border-radius: 0 70% 0 0;
+  border-top: 2px solid var(--note-color, #FFD700);
+  border-top-right-radius: 4px;
+}
+
+/* Double notes (beamed) */
+.note-double {
+  width: 40px;
+}
+
+.note-double .note-stem {
+  height: 28px;
+  top: -28px;
+}
+
+.note-double .note-head-2 {
+  position: absolute;
+  left: 20px;
+  top: 0;
+  width: 20px;
+  height: 15px;
+  background: var(--note-color, #FFD700);
+  border-radius: 50%;
+  transform: rotate(-20deg);
+  box-shadow: 0 0 10px hsla(var(--note-hue, 50), 100%, 60%, 0.4);
+}
+
+.note-double .note-beam {
+  position: absolute;
+  right: -3px;
+  top: -28px;
+  width: 23px;
+  height: 4px;
+  background: var(--note-color, #FFD700);
+  border-radius: 2px;
+}
+
+/* ============================================
+   CHARACTER (Sprite)
+   ============================================ */
+.character-wrap {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  margin-left: -90px;
+  z-index: 10;
+  width: 180px;
+  height: 180px;
+  will-change: transform;
+}
+
+.character-bob {
+  animation: charBob 2.6s ease-in-out infinite;
+}
+
+.character {
+  width: 180px;
+  height: 180px;
+  background-image: url('Yo_bailando.png');
+  background-repeat: no-repeat;
+  background-size: 720px 180px;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  animation: spriteDance 0.6s steps(4) infinite;
+}
+
+/* Subtle glow under character */
+.character-wrap::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 16px;
+  background: radial-gradient(ellipse, rgba(180, 120, 255, 0.3) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: glowPulse 2.6s ease-in-out infinite;
+}
+
+/* ============================================
+   FOOTER MESSAGE
+   ============================================ */
+.footer-message {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(1rem, 3.2vw, 1.4rem);
+  color: rgba(255, 255, 255, 0.7);
+  z-index: 5;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(15px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  transition-delay: 2s;
+  margin-top: 4px;
+  flex-shrink: 0;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+}
+
+.card.opened .footer-message {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================
+   KEYFRAME ANIMATIONS
+   ============================================ */
+
+/* Cover pulsing glow */
+@keyframes coverPulse {
+  0%, 100% {
+    box-shadow:
+      0 15px 50px rgba(0, 0, 0, 0.4),
+      0 5px 20px rgba(200, 80, 192, 0.3);
+  }
+  50% {
+    box-shadow:
+      0 15px 60px rgba(0, 0, 0, 0.4),
+      0 5px 35px rgba(200, 80, 192, 0.6),
+      0 0 50px rgba(255, 107, 157, 0.25);
+  }
+}
+
+/* Heart beating */
+@keyframes heartBeat {
+  0%, 100% { transform: scale(1); }
+  14% { transform: scale(1.15); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.1); }
+  56% { transform: scale(1); }
+}
+
+/* Arrow bouncing down */
+@keyframes arrowBounce {
+  0%, 100% {
+    transform: rotate(-45deg) translateY(0);
+    opacity: 0.5;
+  }
+  50% {
+    transform: rotate(-45deg) translateY(8px);
+    opacity: 1;
+  }
+}
+
+/* Star twinkling */
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: var(--peak, 0.7);
+    transform: scale(1);
+  }
+}
+
+/* Letter entrance wave (continuous) */
+@keyframes letterWave {
+  0%, 100% {
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+  20% {
+    transform: translateY(-10px) scale(1.06) rotate(-2deg);
+  }
+  40% {
+    transform: translateY(-4px) scale(1.02) rotate(-1deg);
+  }
+  60% {
+    transform: translateY(5px) scale(0.97) rotate(1deg);
+  }
+  80% {
+    transform: translateY(2px) scale(0.99) rotate(0.5deg);
+  }
+}
+
+/* Sprite dance frames */
+@keyframes spriteDance {
+  from { background-position: 0 0; }
+  to { background-position: -720px 0; }
+}
+
+/* Character floating bob */
+@keyframes charBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+
+/* Ground glow pulse */
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.6; transform: translateX(-50%) scaleX(1); }
+  50% { opacity: 1; transform: translateX(-50%) scaleX(1.15); }
+}
+
+/* Note falling */
+@keyframes noteFall {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(0.6);
+    opacity: 0;
+  }
+  4% {
+    opacity: 0.9;
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  80% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateY(var(--fall-dist, 800px)) rotate(var(--rotation, 25deg)) scale(0.8);
+    opacity: 0;
+  }
+}
+
+/* Confetti explosion */
+@keyframes confettiBurst {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(0deg) scale(1);
+  }
+  70% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+    transform:
+      translate(calc(-50% + var(--tx)), calc(-50% + var(--ty)))
+      rotate(var(--tr))
+      scale(0.2);
+  }
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 520px) {
+  .card {
+    height: 92vh;
+    max-height: none;
+    min-height: 440px;
+  }
+
+  .card-cover,
+  .card-inside {
+    border-radius: 18px;
+  }
+
+  .cover-border {
+    inset: 10px;
+    border-radius: 12px;
+  }
+
+  .character {
+    width: 140px;
+    height: 140px;
+    background-size: 560px 140px;
+  }
+
+  .character-wrap {
+    margin-left: -70px;
+    width: 140px;
+    height: 140px;
+    bottom: 4px;
+  }
+
+  .birthday-text {
+    margin-top: 4px;
+    margin-bottom: 4px;
+  }
+
+  .name-word {
+    margin-top: 4px;
+  }
+
+  .card-inside {
+    padding: 16px 10px 12px;
+  }
+
+  .note-head {
+    width: 16px;
+    height: 12px;
+  }
+
+  .note-stem {
+    height: 24px;
+    top: -24px;
+  }
+
+  .note-flag {
+    top: -24px;
+    height: 14px;
+    width: 9px;
+  }
+
+  .note-double .note-stem {
+    height: 22px;
+    top: -22px;
+  }
+
+  .note-double .note-head-2 {
+    left: 18px;
+    width: 16px;
+    height: 12px;
+  }
+
+  .note-double .note-beam {
+    width: 18px;
+    top: -22px;
+  }
+}
+
+@media (max-height: 600px) {
+  .card {
+    height: 96vh;
+  }
+
+  .birthday-text {
+    margin-top: 2px;
+    margin-bottom: 2px;
+  }
+
+  .letter {
+    font-size: clamp(1.6rem, 7vw, 3rem);
+  }
+
+  .scene {
+    min-height: 120px;
+  }
+
+  .footer-message {
+    transition-delay: 1.5s;
+  }
+}
+
+/* Landscape phones */
+@media (max-height: 450px) and (orientation: landscape) {
+  .card {
+    height: 98vh;
+  }
+
+  .birthday-text {
+    margin: 0;
+  }
+
+  .letter {
+    font-size: clamp(1.2rem, 5vw, 2rem);
+  }
+
+  .scene {
+    min-height: 80px;
+  }
+
+  .character {
+    width: 100px;
+    height: 100px;
+    background-size: 400px 100px;
+  }
+
+  .character-wrap {
+    margin-left: -50px;
+    width: 100px;
+    height: 100px;
+  }
+}
